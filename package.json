@@ -1,0 +1,22 @@
+{
+  "name": "mongoose-shell",
+  "version": "0.0.1",
+  "description": "A Mongo shell with the full power of Mongoose",
+  "engines": {
+    "node": ">=0.10.x"
+  },
+  "repository": "git://github.com/Clever/mongo-shell.git",
+  "bin": {
+    "mongoose-shell": "./cli.js"
+  },
+  "scripts": {
+    "prepublish": "make"
+  },
+  "license": "BSD",
+  "dependencies": {
+    "coffee-script": "~1.6.3",
+    "optimist": "~0.6.0",
+    "mongoose": "~3.5.15",
+    "underscore": "~1.5.1"
+  }
+}
