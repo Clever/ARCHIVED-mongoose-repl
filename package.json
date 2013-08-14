@@ -1,13 +1,13 @@
 {
-  "name": "mongoose-shell",
+  "name": "mongoose-repl",
   "version": "0.0.1",
-  "description": "A Mongo shell with the full power of Mongoose",
+  "description": "A Mongo REPL with the full power of Mongoose",
   "engines": {
     "node": ">=0.10.x"
   },
-  "repository": "git://github.com/Clever/mongo-shell.git",
+  "repository": "git://github.com/Clever/mongoose-repl.git",
   "bin": {
-    "mongoose-shell": "./cli.js"
+    "mongoose": "./cli.js"
   },
   "scripts": {
     "prepublish": "make"

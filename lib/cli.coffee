@@ -1,7 +1,7 @@
 path = require 'path'
-shell = require './lib-js/mongoose-shell'
+shell = require './lib-js/mongoose-repl'
 argv = require("optimist")
-  .usage('mongoose-shell [options] <mongo url>')
+  .usage('mongoose [options] <mongo url>')
   .options(
     schemas:
       alias: '-s'
