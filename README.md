@@ -4,7 +4,7 @@ A Mongo REPL with the full power of Mongoose.
 
 If you're using the [Mongoose ODM](http://mongoosejs.com/) to keep your MongoDB code from descending into schema-less chaos, it can be a pain to fall back to the barebones Mongo shell when you want to interact with your data.
 
-`mongoose-repl` registers your schemas and exposes the resulting models in an interactive REPL, so you can `findById` and `populate` to your heart's content. You'll never have to type `ObjectId` again. Oh, and did I mention it interprets CoffeeScript?
+`mongoose-repl` registers your schemas and exposes the resulting models in an interactive REPL, so you can `findById` and `populate` to your heart's content. You'll never have to type `ObjectId` again! Oh, and did I mention it interprets CoffeeScript?
 
     $ mongoose --schemas examples/schemas.coffee localhost/test
     > Dog.findById('520bb7baa4e06dc4e9000001').select('enemy name').populate('enemy')
@@ -30,7 +30,7 @@ To connect to a Mongo instance, simply pass in a [MongoDB connection string](htt
     No models loaded
     >
 
-Now we have access to the Mongoose connection object:
+Now you have access to the Mongoose connection object:
 
     > conn.host
     'localhost'
@@ -45,7 +45,7 @@ Now we have access to the Mongoose connection object:
 
 ### Loading Models
 
-Notice that no models were loaded, so the REPL isn't very useful yet. In order for `mongoose-repl` to give you access to Mongoose models, you have to first tell it about your schemas. Create a file that exports a mapping from schema names to schemas, like so:
+Notice that no models were loaded, so the REPL isn't very useful yet. In order for `mongoose-repl` to give you access to Mongoose models, you have to first tell it about your schemas. Create a module that exports a mapping from schema names to schemas, like so:
 
     $ cat examples/schemas.coffee
 ```coffeescript
