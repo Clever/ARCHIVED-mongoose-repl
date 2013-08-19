@@ -9,6 +9,10 @@ util = require 'util'
 _.mixin map_values: (obj, f_val) ->
   _.object _.map obj, (val, key) -> [key, f_val(val, key)]
 
+writer = (val) ->
+  val = val?.toObject?() ? val # toObject prettifies docs
+  util.inspect val, { depth: null, colors: true }
+
 module.exports.run = (schemas, mongo_uri) ->
 
   console.log "Connecting to: #{mongo_uri}"
@@ -22,6 +26,8 @@ module.exports.run = (schemas, mongo_uri) ->
     conn.model(name, schema)
 
   options =
+    useColors: true
+    writer: writer
     eval: (cmd, context, filename, cb) ->
       # Node's REPL sends the input ending with a newline and then wrapped in
       # parens. Unwrap all that.
@@ -32,7 +38,7 @@ module.exports.run = (schemas, mongo_uri) ->
       try res = vm.runInContext js, context, filename
       catch err then return cb err
 
-      if res instanceof mongoose.Query then res.exec cb
+      if res instanceof mongoose.Query then res.exec (err, doc) -> cb null, doc
       else cb null, res
 
   conn.once 'open', ->
