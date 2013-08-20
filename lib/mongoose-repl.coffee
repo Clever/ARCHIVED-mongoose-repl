@@ -9,9 +9,18 @@ util = require 'util'
 _.mixin map_values: (obj, f_val) ->
   _.object _.map obj, (val, key) -> [key, f_val(val, key)]
 
-writer = (val) ->
+inspect = (val) ->
   val = val?.toObject?() ? val # toObject prettifies docs
   util.inspect val, { depth: null, colors: true }
+
+writer = (val) ->
+  if _.isArray val then "[#{_.map(val, inspect).join(',\n')}]"
+  else inspect val
+
+format_error = (err) ->
+  # Node's REPL thinks SyntaxErrors are attempts at multi-line, so we dodge
+  name = if err.name is 'SyntaxError' then 'Syntax Error' else err.name
+  "#{name}: #{err.message}"
 
 module.exports.run = (schemas, mongo_uri) ->
 
@@ -34,9 +43,10 @@ module.exports.run = (schemas, mongo_uri) ->
       # (copied from coffee repl)
       cmd = cmd.replace /^\(([\s\S]*)\n\)$/m, '$1'
 
-      js = CoffeeScript.compile cmd, bare: true
-      try res = vm.runInContext js, context, filename
-      catch err then return cb err
+      try
+        js = CoffeeScript.compile cmd, bare: true
+        res = vm.runInContext js, context, filename
+      catch err then return cb format_error err
 
       if res instanceof mongoose.Query then res.exec (err, doc) -> cb null, doc
       else cb null, res
@@ -51,6 +61,8 @@ module.exports.run = (schemas, mongo_uri) ->
     _.extend repl.context, models
     _.extend repl.context,
       conn: conn
+      ObjectId: conn.base.Types.ObjectId # sometimes you just need it
+      inspect: (val...) -> console.log _.map(val, inspect).join(', ')
 
     repl.on 'exit', ->
       repl.outputStream.write '\n'
