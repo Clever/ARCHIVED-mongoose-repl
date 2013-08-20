@@ -9,9 +9,13 @@ util = require 'util'
 _.mixin map_values: (obj, f_val) ->
   _.object _.map obj, (val, key) -> [key, f_val(val, key)]
 
-writer = (val) ->
+inspect = (val) ->
   val = val?.toObject?() ? val # toObject prettifies docs
   util.inspect val, { depth: null, colors: true }
+
+writer = (val) ->
+  if _.isArray val then "[#{_.map(val, inspect).join(',\n')}]"
+  else inspect val
 
 module.exports.run = (schemas, mongo_uri) ->
 
@@ -51,6 +55,8 @@ module.exports.run = (schemas, mongo_uri) ->
     _.extend repl.context, models
     _.extend repl.context,
       conn: conn
+      ObjectId: conn.base.Types.ObjectId # sometimes you just need it
+      inspect: (val...) -> console.log _.map(val, inspect).join(', ')
 
     repl.on 'exit', ->
       repl.outputStream.write '\n'
