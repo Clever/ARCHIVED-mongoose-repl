@@ -7,7 +7,7 @@
   },
   "repository": "git://github.com/Clever/mongoose-repl.git",
   "bin": {
-    "mongoose": "./cli.js"
+    "mongoose": "./run.js"
   },
   "scripts": {
     "prepublish": "make"
@@ -18,5 +18,8 @@
     "optimist": "~0.6.0",
     "mongoose": "~3.5.15",
     "underscore": "~1.5.1"
+  },
+  "devDependencies": {
+    "mocha": "~1.12.0"
   }
 }
