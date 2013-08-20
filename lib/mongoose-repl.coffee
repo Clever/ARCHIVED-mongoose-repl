@@ -17,6 +17,11 @@ writer = (val) ->
   if _.isArray val then "[#{_.map(val, inspect).join(',\n')}]"
   else inspect val
 
+format_error = (err) ->
+  # Node's REPL thinks SyntaxErrors are attempts at multi-line, so we dodge
+  name = if err.name is 'SyntaxError' then 'Syntax Error' else err.name
+  "#{name}: #{err.message}"
+
 module.exports.run = (schemas, mongo_uri) ->
 
   console.log "Connecting to: #{mongo_uri}"
@@ -38,9 +43,10 @@ module.exports.run = (schemas, mongo_uri) ->
       # (copied from coffee repl)
       cmd = cmd.replace /^\(([\s\S]*)\n\)$/m, '$1'
 
-      js = CoffeeScript.compile cmd, bare: true
-      try res = vm.runInContext js, context, filename
-      catch err then return cb err
+      try
+        js = CoffeeScript.compile cmd, bare: true
+        res = vm.runInContext js, context, filename
+      catch err then return cb format_error err
 
       if res instanceof mongoose.Query then res.exec (err, doc) -> cb null, doc
       else cb null, res
