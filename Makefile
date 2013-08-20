@@ -1,18 +1,16 @@
 # build *.coffee in lib/ to lib-js/
 LIBS=$(shell find . -regex "^./lib\/.*\.coffee\$$" | sed s/\.coffee$$/\.js/ | sed s/lib/lib-js/)
+TESTS=$(shell cd test && ls *.coffee | sed s/\.coffee$$//)
 
-build: $(LIBS) cli.js
+build: $(LIBS)
 
 lib-js/%.js : lib/%.coffee
 	node_modules/coffee-script/bin/coffee --bare -c -o $(@D) $(patsubst lib-js/%,lib/%,$(patsubst %.js,%.coffee,$@))
 
-cli.js: ./lib-js/cli.js
-	echo "#!/usr/bin/env node" | cat - ./lib-js/cli.js > /tmp/cli.js
-	mv /tmp/cli.js ./cli.js
-	chmod +x ./cli.js
+test: $(TESTS)
 
-# TODO
-test: build
+$(TESTS): build
+	node_modules/mocha/bin/mocha --bail --timeout 60000 --compilers coffee:coffee-script test/$@.coffee
 
 publish:
 	$(eval VERSION := $(shell grep version package.json | sed -ne 's/^[ ]*"version":[ ]*"\([0-9\.]*\)",/\1/p';))
