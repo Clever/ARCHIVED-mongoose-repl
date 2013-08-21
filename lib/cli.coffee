@@ -16,15 +16,16 @@ module.exports =
   run: ->
     argv = optimist
       .usage('mongoose [options] <mongo url>')
-      .options 'schemas',
-        alias: 's'
-        describe: 'Path to a module that exports schema definitions'
-      .options 'host',
-        alias: 'h'
-        describe: 'Host to connect to'
-      .options 'version',
-        alias: 'v'
-        describe: 'List version'
+      .options
+        schemas:
+          alias: 's'
+          describe: 'Path to a module that exports schema definitions'
+        host:
+          alias: 'h'
+          describe: 'Host to connect to'
+        version:
+          alias: 'v'
+          describe: 'List version'
       .argv
     if argv.version
       console.log require("#{__dirname}/../package.json").version
