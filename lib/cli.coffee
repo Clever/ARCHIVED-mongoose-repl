@@ -23,5 +23,11 @@ module.exports =
         host:
           alias: '-h'
           describe: 'Host to connect to'
+        version:
+          alias: '-v'
+          describe: 'List version'
       ).argv
-    repl.run schemas(argv.s), mongo_uri(argv.h, argv._?[0])
+    if argv.v
+      console.log require("#{__dirname}/../package.json").version
+    else
+      repl.run schemas(argv.s), mongo_uri(argv.h, argv._?[0])
