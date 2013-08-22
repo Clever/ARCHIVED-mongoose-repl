@@ -37,6 +37,7 @@ module.exports.run = (schemas, mongo_uri) ->
   options =
     useColors: true
     writer: writer
+    terminal: false # so you can use rlwrap
     eval: (cmd, context, filename, cb) ->
       # Node's REPL sends the input ending with a newline and then wrapped in
       # parens. Unwrap all that.

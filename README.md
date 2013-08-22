@@ -81,3 +81,9 @@ The special variable `_` holds the value of the last expression, so you can use 
 
     > Cat.find name: _.enemy.name
     [ { name: 'fluffy', _id: 520baec9d61fae3ee6000001, __v: 0 } ]
+
+## Command History
+
+We leave REPL history to the experts: [rlwrap](http://utopia.knoware.nl/~hlub/rlwrap/#rlwrap). Install it using your favorite package manager, and then alias `mongoose` like so:
+
+    alias mongoose='rlwrap mongoose'
