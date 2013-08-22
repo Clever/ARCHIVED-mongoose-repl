@@ -4,6 +4,7 @@ vm = require 'vm'
 _ = require 'underscore'
 mongoose = require 'mongoose'
 util = require 'util'
+history = require 'repl.history'
 
 # Maps a fn over the values of an object
 _.mixin map_values: (obj, f_val) ->
@@ -37,7 +38,6 @@ module.exports.run = (schemas, mongo_uri) ->
   options =
     useColors: true
     writer: writer
-    terminal: false # so you can use rlwrap
     eval: (cmd, context, filename, cb) ->
       # Node's REPL sends the input ending with a newline and then wrapped in
       # parens. Unwrap all that.
@@ -62,8 +62,10 @@ module.exports.run = (schemas, mongo_uri) ->
     _.extend repl.context, models
     _.extend repl.context,
       conn: conn
-      ObjectId: conn.base.Types.ObjectId # sometimes you just need it
+      ObjectId: conn.base.Types.ObjectId
       inspect: (val...) -> console.log _.map(val, inspect).join(', ')
+
+    history repl, "#{process.env.HOME}/.mongoose_history"
 
     repl.on 'exit', ->
       repl.outputStream.write '\n'

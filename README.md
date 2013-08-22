@@ -14,6 +14,12 @@ If you're using the [Mongoose ODM](http://mongoosejs.com/) to keep your MongoDB 
     > Cat.findById _.enemy._id
     { name: 'fluffy', _id: 520baec9d61fae3ee6000001, __v: 0 }
 
+Some other nice features:
+
+- Tab completion
+- Command history
+- Colored printing of values
+
 ## Installation
 
     npm install -g mongoose-repl
@@ -24,7 +30,7 @@ If you're using the [Mongoose ODM](http://mongoosejs.com/) to keep your MongoDB 
 
 To connect to a Mongo instance, simply pass in a [MongoDB connection string](http://docs.mongodb.org/manual/reference/connection-string/):
 
-    $ mongoose localhost/test 
+    $ mongoose localhost/test
     Connecting to: localhost
     Using db: test
     No models loaded
@@ -38,7 +44,7 @@ Now you have access to the Mongoose connection object:
     'test'
     > conn.db
     { domain: null,
-      _events: 
+      _events:
        { close: [Function],
          error: [Function],
      ...
@@ -82,8 +88,10 @@ The special variable `_` holds the value of the last expression, so you can use 
     > Cat.find name: _.enemy.name
     [ { name: 'fluffy', _id: 520baec9d61fae3ee6000001, __v: 0 } ]
 
-## Command History
+### Globals
 
-We leave REPL history to the experts: [rlwrap](http://utopia.knoware.nl/~hlub/rlwrap/#rlwrap). Install it using your favorite package manager, and then alias `mongoose` like so:
+`mongoose-repl` exposes some helpful global functions and objects in the REPL context:
 
-    alias mongoose='rlwrap mongoose'
+- `conn` - the Mongoose connection object
+- `ObjectId` - because sometimes you just need it
+- `inspect` - a colorful variadic pretty printer

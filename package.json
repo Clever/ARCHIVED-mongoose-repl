@@ -1,6 +1,6 @@
 {
   "name": "mongoose-repl",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A Mongo REPL with the full power of Mongoose",
   "engines": {
     "node": ">=0.10.x"
@@ -17,6 +17,7 @@
     "coffee-script": "~1.6.3",
     "optimist": "~0.6.0",
     "mongoose": "~3.5.15",
+    "repl.history": "~0.1.1",
     "underscore": "~1.5.1"
   },
   "devDependencies": {
