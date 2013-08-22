@@ -1,6 +1,6 @@
 {
   "name": "mongoose-repl",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A Mongo REPL with the full power of Mongoose",
   "engines": {
     "node": ">=0.10.x"
