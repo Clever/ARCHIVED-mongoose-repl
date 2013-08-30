@@ -36,19 +36,6 @@ To connect to a Mongo instance, simply pass in a [MongoDB connection string](htt
     No models loaded
     >
 
-Now you have access to the Mongoose connection object:
-
-    > conn.host
-    'localhost'
-    > conn.name
-    'test'
-    > conn.db
-    { domain: null,
-      _events:
-       { close: [Function],
-         error: [Function],
-     ...
-
 ### Loading Models
 
 Notice that no models were loaded, so the REPL isn't very useful yet. In order for `mongoose-repl` to give you access to Mongoose models, you have to first tell it about your schemas. Create a module that exports a mapping from schema names to schemas, like so:
@@ -72,6 +59,10 @@ Now you can load these schemas into the REPL using the `--schemas` (`-s`) option
     Loaded models: Cat, Dog
     > Cat.modelName
     'Cat'
+
+If you have schemas with references, you may see missing references when you query your models. This is most likely due to the fact that `mongoose-repl` is using a different instance of Mongoose than your schemas. You can tell `mongoose-repl` to use the same instance using the `--mongoose` (`-m`) option:
+
+    mongoose --schemas path/to/someproject/schemas --mongoose /path/to/someproject/node_modules/mongoose
 
 ### Querying
 

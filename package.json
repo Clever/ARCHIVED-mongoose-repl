@@ -16,7 +16,7 @@
   "dependencies": {
     "coffee-script": "~1.6.3",
     "optimist": "~0.6.0",
-    "mongoose": "~3.5.15",
+    "mongoose": "~3.6.*",
     "repl.history": "~0.1.1",
     "underscore": "~1.5.1"
   },

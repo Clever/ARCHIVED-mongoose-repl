@@ -4,8 +4,7 @@ optimist = require "optimist"
 
 module.exports =
 
-  schemas: schemas = (schema_path) ->
-    if schema_path? then require path.resolve schema_path else {}
+  req: req = (some_path) -> if some_path? then require path.resolve some_path
 
   mongo_uri: mongo_uri = (host, db) ->
     if db and '/' in db
@@ -20,6 +19,9 @@ module.exports =
         schemas:
           alias: 's'
           describe: 'Path to a module that exports schema definitions'
+        mongoose:
+          alias: 'm'
+          describe: 'Path to the Mongoose library to require'
         host:
           alias: 'h'
           describe: 'Host to connect to'
@@ -30,4 +32,6 @@ module.exports =
     if argv.version
       console.log require("#{__dirname}/../package.json").version
     else
-      repl.run schemas(argv.schemas), mongo_uri(argv.host, argv._?[0])
+      repl.run req(argv.schemas) or {},
+        req(argv.mongoose) or require('mongoose'),
+        mongo_uri(argv.host, argv._?[0])

@@ -2,7 +2,6 @@ node_repl = require 'repl'
 CoffeeScript = require 'coffee-script'
 vm = require 'vm'
 _ = require 'underscore'
-mongoose = require 'mongoose'
 util = require 'util'
 history = require 'repl.history'
 
@@ -23,7 +22,7 @@ format_error = (err) ->
   name = if err.name is 'SyntaxError' then 'Syntax Error' else err.name
   "#{name}: #{err.message}"
 
-module.exports.run = (schemas, mongo_uri) ->
+module.exports.run = (schemas, mongoose, mongo_uri) ->
 
   console.log "Connecting to: #{mongo_uri}"
   conn = mongoose.createConnection mongo_uri
