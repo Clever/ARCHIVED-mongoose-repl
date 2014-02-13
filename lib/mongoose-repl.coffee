@@ -48,8 +48,10 @@ module.exports.run = (schemas, mongoose, mongo_uri) ->
         res = vm.runInContext js, context, filename
       catch err then return cb format_error err
 
-      if res instanceof mongoose.Query then res.exec (err, doc) -> cb err, doc
-      else cb null, res
+      if res instanceof mongoose.Query
+        res.setOptions(slaveOk: true).exec (err, doc) -> cb err, doc
+      else
+        cb null, res
 
   conn.once 'open', ->
     console.log "Using db: #{conn.name}"
