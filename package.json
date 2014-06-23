@@ -10,7 +10,8 @@
     "mongoose": "./run.js"
   },
   "scripts": {
-    "prepublish": "make"
+    "prepublish": "make",
+    "test": "make -Br test"
   },
   "license": "BSD",
   "dependencies": {
