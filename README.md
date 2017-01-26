@@ -1,5 +1,7 @@
 # mongoose-repl
 
+_ARCHIVED: This repo is no longer maintained by Clever. If you're interested in taking ownership, please let us know via a GH issue._
+
 A Mongo REPL with the full power of Mongoose.
 
 If you're using the [Mongoose ODM](http://mongoosejs.com/) to keep your MongoDB code from descending into schema-less chaos, it can be a pain to fall back to the barebones Mongo shell when you want to interact with your data.
