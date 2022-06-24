@@ -1,6 +1,8 @@
-# mongoose-repl
+# Notice
 
-_ARCHIVED: This repo is no longer maintained by Clever. If you're interested in taking ownership, please let us know via a GH issue._
+_ARCHIVED: This repo is no longer maintained by Clever._
+
+# mongoose-repl
 
 A Mongo REPL with the full power of Mongoose.
 
