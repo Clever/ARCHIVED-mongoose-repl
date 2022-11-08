@@ -66,7 +66,7 @@ module.exports.run = (schemas, mongoose, mongo_uri) ->
       ObjectId: conn.base.Types.ObjectId
       inspect: (val...) -> console.log _.map(val, inspect).join(', ')
 
-    history repl, "#{process.env.HOME}/.mongoose_history"
+    history repl, "#{process.env.HOME||process.env.USERPROFILE}/.mongoose_history"
 
     repl.on 'exit', ->
       repl.outputStream.write '\n'
